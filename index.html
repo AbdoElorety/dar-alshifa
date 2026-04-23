@@ -2936,7 +2936,7 @@ result.innerHTML="❌ مش موجود";
           searchTerm = e.target.value;
           renderHome();
         });
-
+           <color>[red][blue][black]
         document.getElementById('searchBtn').addEventListener('click', () => {
           const input = document.getElementById('searchInput');
           searchTerm = input.value;
@@ -3028,3 +3028,374 @@ result.innerHTML="❌ مش موجود";
 </body>
 </htm
   <input type="file" accept="image/*" onchange="scanImage(event)">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>دليل الأدوية الشامل في مصر | موسوعة الدواء المصرية</title>
+  <!-- Font Awesome 6 للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      color: #1a2b3c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* الهيدر */
+    header {
+      background: linear-gradient(135deg, #0a3147 0%, #1a5f8a 100%);
+      color: white;
+      padding: 1.5rem 0;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+      text-align: center;
+      border-bottom: 4px solid #f0b90b;
+      margin-bottom: 1.5rem;
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    header h1 i {
+      color: #f0b90b;
+      font-size: 2.2rem;
+    }
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-top: 0.3rem;
+    }
+
+    /* شريط البحث والفلاتر */
+    .search-filter-panel {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 40px;
+      padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+      flex: 2;
+      min-width: 280px;
+      border: 1px solid #dce3eb;
+    }
+    .search-box:focus-within {
+      border-color: #1a5f8a;
+      box-shadow: 0 0 0 3px rgba(26,95,138,0.15);
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 0.5rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      outline: none;
+    }
+    .search-box button {
+      background: #0a3147;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.4rem;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .filter-btn {
+      background: #e9f0f7;
+      border: none;
+      padding: 0.5rem 1.1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #1e3b5a;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #0a3147;
+      color: white;
+    }
+
+    /* جدول الأدوية */
+    .medicines-table-wrapper {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+    th {
+      background: #0a3147;
+      color: white;
+      padding: 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: right;
+    }
+    td {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid #eef2f6;
+      color: #2c3e50;
+    }
+    tr:hover td {
+      background-color: #f8fafd;
+    }
+    .medicine-name {
+      font-weight: 700;
+      color: #0a3147;
+    }
+    .generic {
+      color: #4b6589;
+      font-size: 0.9rem;
+    }
+    .price {
+      font-weight: bold;
+      color: #0b5e42;
+      background: #e0f2e9;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .schedule {
+      background: #fff4e5;
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .no-data {
+      text-align: center;
+      padding: 3rem;
+      color: #667c94;
+    }
+
+    /* الفوتر */
+    footer {
+      text-align: center;
+      padding: 1.8rem;
+      color: #5b6e85;
+      border-top: 1px solid #dfe6ef;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .warning-badge {
+      background: #fff3cd;
+      padding: 0.8rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-capsules"></i> موسوعة الأدوية المصرية الشاملة</h1>
+      <p class="subtitle">أسماء الأدوية | برنامج الجرعات | الأسعار التقريبية في مصر</p>
+    </header>
+
+    <main id="app-content"></main>
+
+    <footer>
+      <p><i class="far fa-copyright"></i> 2025 دليل الأدوية في مصر. جميع المعلومات للأغراض التعليمية فقط. استشر طبيبك أو الصيدلي دائمًا.</p>
+      <p style="margin-top: 5px; font-size:0.85rem;">الأسعار تقريبية وقابلة للتغيير حسب سياسة التسعير الدوائي.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // قاعدة بيانات موسعة للأدوية المصرية (أمثلة توضيحية – يمكنك تعديلها أو الإضافة عليها)
+      const medicines = [
+        // مسكنات وخوافض حرارة
+        { id:1, name:"بنادول إكسترا", generic:"باراسيتامول + كافيين", category:"مسكنات", dose:"قرص كل 6-8 ساعات", timing:"بعد الأكل", price:"35 ج.م", company:"جلاكسو" },
+        { id:2, name:"بروفينال 400", generic:"إيبوبروفين", category:"مسكنات", dose:"قرص كل 8 ساعات", timing:"بعد الأكل", price:"28 ج.م", company:"فاركو" },
+        { id:3, name:"كيتولاك", generic:"كيتورولاك", category:"مسكنات", dose:"قرص كل 8 ساعات", timing:"بعد الأكل", price:"22 ج.م", company:"أمون" },
+        { id:4, name:"سولبادين", generic:"باراسيتامول + كودايين", category:"مسكنات", dose:"قرصين حتى 4 مرات يومياً", timing:"حسب الحاجة", price:"45 ج.م", company:"سانوفي" },
+        { id:5, name:"فولتارين", generic:"ديكلوفيناك صوديوم", category:"مسكنات", dose:"قرص مرتين يومياً", timing:"بعد الأكل", price:"38 ج.م", company:"نوفارتس" },
+        // مضادات حيوية
+        { id:6, name:"أوجمنتين 625", generic:"أموكسيسيللين + كلافولانيك", category:"مضادات حيوية", dose:"قرص كل 12 ساعة", timing:"مع الأكل", price:"85 ج.م", company:"جلاكسو" },
+        { id:7, name:"زيثرون", generic:"أزيثروميسين", category:"مضادات حيوية", dose:"قرص يومياً لمدة 3 أيام", timing:"قبل الأكل بساعة", price:"42 ج.م", company:"إيبيكو" },
+        { id:8, name:"سوبراكس", generic:"سيفيكسيم", category:"مضادات حيوية", dose:"قرص يومياً", timing:"مع الأكل", price:"55 ج.م", company:"حكمة" },
+        { id:9, name:"كلافيموكس", generic:"أموكسيسيللين + كلافولانيك", category:"مضادات حيوية", dose:"قرص كل 12 ساعة", timing:"مع الأكل", price:"70 ج.م", company:"سيد" },
+        { id:10, name:"تافانيك", generic:"ليفوفلوكساسين", category:"مضادات حيوية", dose:"قرص يومياً", timing:"بعيداً عن اللبن", price:"90 ج.م", company:"سانوفي" },
+        // أدوية برد وحساسية
+        { id:11, name:"كونجيستال", generic:"باراسيتامول + سودوإيفيدرين", category:"برد وحساسية", dose:"قرصين 3 مرات يومياً", timing:"بعد الأكل", price:"24 ج.م", company:"سيد" },
+        { id:12, name:"هيستازين", generic:"سيتريزين", category:"برد وحساسية", dose:"قرص يومياً", timing:"مساءً", price:"18 ج.م", company:"إيبيكو" },
+        { id:13, name:"تلفاست", generic:"فيكسوفينادين", category:"برد وحساسية", dose:"قرص يومياً", timing:"قبل الأكل", price:"48 ج.م", company:"سانوفي" },
+        { id:14, name:"زيرتك", generic:"سيتريزين", category:"برد وحساسية", dose:"قرص يومياً", timing:"مساءً", price:"32 ج.م", company:"يو سي بي" },
+        { id:15, name:"فلوريست", generic:"لوراتادين + سودوإيفيدرين", category:"برد وحساسية", dose:"قرص مرتين يومياً", timing:"بعد الأكل", price:"27 ج.م", company:"جلوبال" },
+        // أدوية المعدة والجهاز الهضمي
+        { id:16, name:"زانتاك", generic:"رانيتيدين", category:"أدوية معدة", dose:"قرص مرتين يومياً", timing:"قبل الأكل", price:"30 ج.م", company:"جلاكسو" },
+        { id:17, name:"نيكسيوم", generic:"إيزوميبرازول", category:"أدوية معدة", dose:"قرص يومياً", timing:"صباحاً قبل الأكل", price:"95 ج.م", company:"أسترازينيكا" },
+        { id:18, name:"موتينورم", generic:"دومبيريدون", category:"أدوية معدة", dose:"قرص 3 مرات يومياً", timing:"قبل الأكل بنصف ساعة", price:"20 ج.م", company:"جانسن" },
+        { id:19, name:"مالوكس", generic:"هيدروكسيد ألومنيوم + مغنيسيوم", category:"أدوية معدة", dose:"مضغ قرصين عند الحاجة", timing:"بعد الأكل أو عند الحموضة", price:"25 ج.م", company:"سانوفي" },
+        // أدوية السكر
+        { id:20, name:"داياميكرون إم آر", generic:"جليكلازيد", category:"أدوية سكر", dose:"قرص يومياً", timing:"صباحاً مع الإفطار", price:"55 ج.م", company:"سيرفيه" },
+        { id:21, name:"جلوكوفاج", generic:"ميتفورمين", category:"أدوية سكر", dose:"قرص مرتين يومياً", timing:"مع الأكل", price:"32 ج.م", company:"ميرك" },
+        { id:22, name:"أماريل", generic:"جليميبيريد", category:"أدوية سكر", dose:"قرص يومياً", timing:"قبل الإفطار", price:"48 ج.م", company:"سانوفي" },
+        { id:23, name:"جانوفيا", generic:"سيتاجلبتين", category:"أدوية سكر", dose:"قرص يومياً", timing:"مع أو بدون طعام", price:"160 ج.م", company:"ميرك" },
+        // أدوية القلب والضغط
+        { id:24, name:"كونكور", generic:"بيسوبرولول", category:"أدوية قلب وضغط", dose:"قرص يومياً", timing:"صباحاً", price:"45 ج.م", company:"ميرك" },
+        { id:25, name:"كابوتين", generic:"كابتوبريل", category:"أدوية قلب وضغط", dose:"قرص مرتين يومياً", timing:"قبل الأكل بساعة", price:"22 ج.م", company:"جلاكسو" },
+        { id:26, name:"أملور", generic:"أملوديبين", category:"أدوية قلب وضغط", dose:"قرص يومياً", timing:"في أي وقت", price:"38 ج.م", company:"فايزر" },
+        { id:27, name:"لازيكس", generic:"فوروسيميد", category:"أدوية قلب وضغط", dose:"قرص صباحاً", timing:"على معدة فارغة", price:"18 ج.م", company:"سانوفي" },
+        { id:28, name:"أتور", generic:"أتورفاستاتين", category:"أدوية قلب وضغط", dose:"قرص يومياً", timing:"مساءً", price:"55 ج.م", company:"إيبيكو" },
+        // فيتامينات ومكملات
+        { id:29, name:"فيتاماكس بلس", generic:"فيتامينات متعددة", category:"فيتامينات", dose:"قرص يومياً", timing:"بعد الإفطار", price:"40 ج.م", company:"إيبيكو" },
+        { id:30, name:"كال سي بلس", generic:"كالسيوم + فيتامين سي", category:"فيتامينات", dose:"قرص فوار يومياً", timing:"بعد الأكل", price:"35 ج.م", company:"أمون" },
+        { id:31, name:"أوميجا 3 بلس", generic:"زيت سمك", category:"فيتامينات", dose:"كبسولة يومياً", timing:"مع الأكل", price:"60 ج.م", company:"سيد" },
+        { id:32, name:"فيروجلوبين", generic:"حديد + زنك", category:"فيتامينات", dose:"كبسولة يومياً", timing:"على معدة فارغة", price:"48 ج.م", company:"فيتابيوتكس" },
+        // أدوية متنوعة
+        { id:33, name:"فينتولين بخاخ", generic:"سالبوتامول", category:"أدوية صدرية", dose:"بختان عند الحاجة", timing:"حسب الضرورة", price:"65 ج.م", company:"جلاكسو" },
+        { id:34, name:"ديكافين إم", generic:"ديكساميثازون", category:"كورتيزون", dose:"حسب تعليمات الطبيب", timing:"صباحاً بعد الأكل", price:"16 ج.م", company:"إيبيكو" },
+        { id:35, name:"كيناكومب", generic:"نيستاتين + تريامسينولون", category:"كريمات جلدية", dose:"دهان مرتين يومياً", timing:"حسب الحاجة", price:"22 ج.م", company:"جلاكسو" },
+        { id:36, name:"بانديرمال", generic:"فوسيديك أسيد", category:"كريمات جلدية", dose:"دهان 3 مرات يومياً", timing:"على بشرة نظيفة", price:"18 ج.م", company:"ليو" }
+      ];
+
+      const categories = ["الكل", "مسكنات", "مضادات حيوية", "برد وحساسية", "أدوية معدة", "أدوية سكر", "أدوية قلب وضغط", "فيتامينات", "أدوية صدرية", "كورتيزون", "كريمات جلدية"];
+
+      let activeCategory = "الكل";
+      let searchTerm = "";
+      const appContent = document.getElementById('app-content');
+
+      function getFilteredMeds() {
+        return medicines.filter(med => {
+          const matchCat = activeCategory === "الكل" || med.category === activeCategory;
+          const term = searchTerm.trim().toLowerCase();
+          const matchSearch = term === "" ||
+            med.name.toLowerCase().includes(term) ||
+            med.generic.toLowerCase().includes(term) ||
+            med.category.toLowerCase().includes(term);
+          return matchCat && matchSearch;
+        });
+      }
+
+      function renderUI() {
+        const filtered = getFilteredMeds();
+        
+        const catButtons = categories.map(cat => 
+          `<button class="filter-btn ${activeCategory === cat ? 'active' : ''}" data-cat="${cat}"><i class="fas fa-tag"></i> ${cat}</button>`
+        ).join('');
+
+        let tableRows = '';
+        if (filtered.length === 0) {
+          tableRows = `<tr><td colspan="6" class="no-data"><i class="fas fa-search" style="font-size:2rem; opacity:0.4;"></i><p>لا توجد أدوية مطابقة. جرب بحثاً آخر.</p></td></tr>`;
+        } else {
+          tableRows = filtered.map(m => `
+            <tr>
+              <td><span class="medicine-name">${m.name}</span></td>
+              <td class="generic">${m.generic}</td>
+              <td><span class="schedule"><i class="far fa-clock"></i> ${m.dose}</span><br><small>${m.timing}</small></td>
+              <td><span class="price">${m.price}</span></td>
+              <td>${m.company}</td>
+              <td>${m.category}</td>
+            </tr>
+          `).join('');
+        }
+
+        const html = `
+          <div class="warning-badge">
+            <i class="fas fa-exclamation-triangle"></i> <strong>تنويه مهم:</strong> الأسعار تقريبية حسب آخر تسعيرة متاحة، والجرعات استرشادية. يجب مراجعة الطبيب أو الصيدلي قبل الاستخدام.
+          </div>
+          <div class="search-filter-panel">
+            <div class="search-box">
+              <i class="fas fa-search" style="color:#4b6589; margin-left:8px;"></i>
+              <input type="text" id="searchInput" placeholder="ابحث عن دواء (اسم، مادة فعالة)..." value="${searchTerm}">
+              <button id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+            </div>
+            <div class="category-filters" id="catFilters">
+              ${catButtons}
+            </div>
+          </div>
+          <div class="medicines-table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>اسم الدواء</th>
+                  <th>المادة الفعالة</th>
+                  <th>برنامج الجرعة</th>
+                  <th>السعر (ج.م)</th>
+                  <th>الشركة</th>
+                  <th>التصنيف</th>
+                </tr>
+              </thead>
+              <tbody>${tableRows}</tbody>
+            </table>
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        // ربط الأحداث
+        document.getElementById('searchInput').addEventListener('input', e => {
+          searchTerm = e.target.value;
+          renderUI();
+        });
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          searchTerm = document.getElementById('searchInput').value;
+          renderUI();
+        });
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', e => {
+            activeCategory = e.currentTarget.getAttribute('data-cat');
+            searchTerm = "";
+            renderUI();
+          });
+        });
+      }
+
+      renderUI();
+    })();
+  </script>
+</body>
+</html>
