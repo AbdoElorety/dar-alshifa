@@ -27,6 +27,13 @@ button{padding:10px;background:red;color:white;border:none;border-radius:10px;}
 const drugs=[
 {name:"Panadol",use:"مسكن",price:"30 جنيه",dose:"3 مرات"},
 {name:"Brufen",use:"مضاد التهاب",price:"25 جنيه",dose:"مرتين"}
+const drugs = [
+{name:"Panadol",use:"مسكن وخافض حرارة",price:"30 جنيه",dose:"3 مرات يومياً"},
+{name:"Brufen",use:"مضاد التهاب",price:"25 جنيه",dose:"مرتين يومياً"},
+{name:"Cataflam",use:"مسكن قوي للأسنان",price:"40 جنيه",dose:"مرتين"},
+{name:"Augmentin",use:"مضاد حيوي",price:"80 جنيه",dose:"حسب الدكتور"},
+{name:"Congestal",use:"برد واحتقان",price:"35 جنيه",dose:"3 مرات"},
+{name:"Antinal",use:"إسهال",price:"20 جنيه",dose:"3 مرات"}
 ];
 
 function searchDrug(){
@@ -49,3 +56,2974 @@ result.innerHTML="❌ مش موجود";
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>دليل الأدوية في مصر | موسوعة الدواء المصرية</title>
+  <!-- Font Awesome للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fc;
+      color: #1e2b3c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* الهيدر */
+    header {
+      background: linear-gradient(135deg, #0b3d5f 0%, #1a5f8a 100%);
+      color: white;
+      padding: 1.8rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      border-bottom: 4px solid #f0b90b;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    header h1 i {
+      color: #f0b90b;
+      font-size: 2.2rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* شريط البحث والتصنيف */
+    .search-filter-bar {
+      background: white;
+      padding: 1.5rem 0;
+      margin: 1.8rem 0;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 40px;
+      padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+      flex: 2;
+      min-width: 260px;
+      border: 1px solid #e2e8f0;
+      transition: 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #1a5f8a;
+      box-shadow: 0 0 0 3px rgba(26,95,138,0.2);
+    }
+
+    .search-box i {
+      color: #5e7a98;
+      margin-left: 8px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 0.5rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      outline: none;
+      color: #0b2b44;
+    }
+
+    .search-box button {
+      background: #0b3d5f;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-box button:hover {
+      background: #1a5f8a;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: #e9eff5;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #1e3b5a;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn i {
+      font-size: 0.9rem;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    /* شبكة الأدوية */
+    .medicines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .medicine-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid #eef2f6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .medicine-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+      border-color: #cbd5e1;
+    }
+
+    .medicine-icon {
+      font-size: 2.7rem;
+      color: #1a5f8a;
+      margin-bottom: 0.8rem;
+    }
+
+    .medicine-category {
+      display: inline-block;
+      background: #e6f0f9;
+      color: #0b3d5f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+      align-self: flex-start;
+    }
+
+    .medicine-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #0a3147;
+    }
+
+    .generic-name {
+      color: #4b6589;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .dose-info {
+      background: #f8fafd;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin: 0.7rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2c3e50;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #0b5e42;
+      background: #e0f2e9;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+
+    .company {
+      font-size: 0.85rem;
+      color: #5f6c80;
+    }
+
+    .more-btn {
+      margin-top: auto;
+      text-decoration: none;
+      background: transparent;
+      border: 1.5px solid #0b3d5f;
+      color: #0b3d5f;
+      padding: 0.5rem;
+      border-radius: 30px;
+      text-align: center;
+      font-weight: 600;
+      transition: 0.2s;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .more-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      color: #5e6f82;
+      font-size: 1.2rem;
+    }
+
+    /* قسم تفصيلي (صفحة دواء) */
+    .detail-section {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #1a5f8a;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #5b6e85;
+      border-top: 1px solid #dfe6ef;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .warning {
+      background: #fff7e0;
+      border-right: 5px solid #f0b90b;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-capsules"></i> موسوعة الأدوية المصرية</h1>
+      <p class="subtitle">دليل شامل لأشهر أنواع الأدوية والمستحضرات الصيدلانية في مصر</p>
+    </header>
+
+    <!-- المحتوى الرئيسي سيتم حقنه عبر JavaScript -->
+    <main id="app-content"></main>
+
+    <footer class="footer">
+      <p><i class="far fa-copyright"></i> 2025 موسوعة الأدوية المصرية - جميع المعلومات للأغراض التعليمية فقط. استشر طبيبك دائمًا.</p>
+      <p style="font-size:0.85rem; margin-top:6px;">هذا الموقع لا يقدم استشارات طبية والأسعار تقريبية.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // قاعدة بيانات الأدوية (أمثلة توضيحية فقط - ليست حقيقية بالكامل)
+      const medicines = [
+        {
+          id: 1,
+          name: "بنادول إكسترا",
+          generic: "باراسيتامول + كافيين",
+          category: "مسكنات",
+          icon: "fa-pills",
+          dose: "١-٢ قرص كل ٦ ساعات",
+          price: "٣٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مسكن للآلام وخافض للحرارة يحتوي على باراسيتامول مع كافيين لتعزيز الفعالية.",
+          usage: "الصداع، آلام الأسنان، آلام الدورة الشهرية."
+        },
+        {
+          id: 2,
+          name: "بروفينال",
+          generic: "إيبوبروفين",
+          category: "مسكنات",
+          icon: "fa-capsules",
+          dose: "٤٠٠ مجم كل ٨ ساعات",
+          price: "٢٨ ج.م",
+          company: "فاركو للأدوية",
+          description: "مضاد التهاب غير ستيرويدي، مسكن قوي وخافض حرارة.",
+          usage: "الالتهابات، الروماتيزم، الإصابات."
+        },
+        {
+          id: 3,
+          name: "أوجمنتين",
+          generic: "أموكسيسيللين + حمض كلافولانيك",
+          category: "مضادات حيوية",
+          icon: "fa-shield-virus",
+          dose: "٦٢٥ مجم كل ١٢ ساعة",
+          price: "٨٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مضاد حيوي واسع المجال لمقاومة البكتيريا.",
+          usage: "التهابات الجهاز التنفسي، الأذن، الجيوب الأنفية."
+        },
+        {
+          id: 4,
+          name: "هيستازين",
+          generic: "سيتريزين",
+          category: "حساسية",
+          icon: "fa-allergies",
+          dose: "قرص واحد يوميًا",
+          price: "١٨ ج.م",
+          company: "إيبيكو",
+          description: "مضاد هستامين لعلاج أعراض الحساسية الموسمية.",
+          usage: "العطس، الحكة، الرشح التحسسي."
+        },
+        {
+          id: 5,
+          name: "كونجيستال",
+          generic: "باراسيتامول + سودوإيفيدرين",
+          category: "برد وإنفلونزا",
+          icon: "fa-head-side-cough",
+          dose: "قرصين ٣ مرات يوميًا",
+          price: "٢٢ ج.م",
+          company: "سيد للأدوية",
+          description: "لعلاج أعراض البرد والإنفلونزا واحتقان الأنف.",
+          usage: "الزكام، احتقان الجيوب الأنفية."
+        },
+        {
+          id: 6,
+          name: "فينتولين",
+          generic: "سالبوتامول",
+          category: "أمراض صدرية",
+          icon: "fa-lungs",
+          dose: "بخاخ حسب الحاجة",
+          price: "٦٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "موسع للشعب الهوائية لعلاج أزمات الربو.",
+          usage: "الربو، ضيق التنفس."
+        },
+        {
+          id: 7,
+          name: "داياميكرون إم آر",
+          generic: "جليكلازيد",
+          category: "سكري",
+          icon: "fa-syringe",
+          dose: "قرص يوميًا صباحًا",
+          price: "٥٥ ج.م",
+          company: "سيرفيه",
+          description: "علاج السكري من النوع الثاني لضبط مستوى السكر.",
+          usage: "مرض السكري."
+        },
+        {
+          id: 8,
+          name: "زانتاك",
+          generic: "رانيتيدين",
+          category: "جهاز هضمي",
+          icon: "fa-stomach",
+          dose: "قرص مرتين يوميًا",
+          price: "٣٠ ج.م",
+          company: "جلاكسو",
+          description: "مضاد للحموضة وعلاج قرحة المعدة.",
+          usage: "حرقة المعدة، ارتجاع المريء."
+        }
+      ];
+
+      const categories = ["الكل", "مسكنات", "مضادات حيوية", "حساسية", "برد وإنفلونزا", "أمراض صدرية", "سكري", "جهاز هضمي"];
+
+      // حالة التطبيق
+      let currentView = 'home'; // home or detail
+      let selectedMedicineId = null;
+      let activeCategory = "الكل";
+      let searchTerm = "";
+
+      // عنصر المحتوى الرئيسي
+      const appContent = document.getElementById('app-content');
+
+      // تصفية الأدوية حسب الفئة والبحث
+      function getFilteredMedicines() {
+        return medicines.filter(med => {
+          const matchCategory = activeCategory === "الكل" || med.category === activeCategory;
+          const term = searchTerm.trim().toLowerCase();
+          const matchSearch = term === "" || 
+                              med.name.toLowerCase().includes(term) || 
+                              med.generic.toLowerCase().includes(term) ||
+                              med.category.toLowerCase().includes(term);
+          return matchCategory && matchSearch;
+        });
+      }
+
+      // عرض الصفحة الرئيسية
+      function renderHome() {
+        const filtered = getFilteredMedicines();
+        
+        let categoryButtons = categories.map(cat => {
+          const activeClass = activeCategory === cat ? 'active' : '';
+          return `<button class="filter-btn ${activeClass}" data-category="${cat}"><i class="fas fa-tag"></i> ${cat}</button>`;
+        }).join('');
+
+        let cardsHtml = '';
+        if (filtered.length === 0) {
+          cardsHtml = `<div class="no-results"><i class="fas fa-search" style="font-size:2rem; opacity:0.6;"></i><p>لا توجد أدوية مطابقة لبحثك</p></div>`;
+        } else {
+          cardsHtml = filtered.map(med => {
+            return `
+              <div class="medicine-card" data-id="${med.id}">
+                <i class="fas ${med.icon} medicine-icon"></i>
+                <span class="medicine-category">${med.category}</span>
+                <h3>${med.name}</h3>
+                <div class="generic-name">${med.generic}</div>
+                <div class="dose-info"><i class="fas fa-clock"></i> ${med.dose}</div>
+                <span class="price"><i class="fas fa-tag"></i> ${med.price}</span>
+                <div class="company"><i class="far fa-building"></i> ${med.company}</div>
+                <button class="more-btn" data-id="${med.id}">تفاصيل الدواء <i class="fas fa-arrow-left"></i></button>
+              </div>
+            `;
+          }).join('');
+        }
+
+        const html = `
+          <div class="search-filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="searchInput" placeholder="ابحث عن دواء (اسم، مادة فعالة)..." value="${searchTerm}">
+              <button id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+            </div>
+            <div class="category-filters" id="categoryFilters">
+              ${categoryButtons}
+            </div>
+          </div>
+          <div class="medicines-grid" id="medicinesGrid">
+            ${cardsHtml}
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        // إضافة مستمعي الأحداث
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+          searchTerm = e.target.value;
+          renderHome();
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          const input = document.getElementById('searchInput');
+          searchTerm = input.value;
+          renderHome();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            activeCategory = e.currentTarget.getAttribute('data-category');
+            searchTerm = ""; // إعادة تعيين البحث عند تغيير الفئة لرؤية أوضح
+            renderHome();
+          });
+        });
+
+        document.querySelectorAll('.more-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+
+        // أيضًا النقر على البطاقة بالكامل (ما عدا الزر)
+        document.querySelectorAll('.medicine-card').forEach(card => {
+          card.addEventListener('click', function(e) {
+            if (e.target.closest('button')) return; // لا تفعل إذا كان الزر
+            const id = parseInt(this.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+      }
+
+      // عرض صفحة تفاصيل الدواء
+      function renderDetail() {
+        const medicine = medicines.find(m => m.id === selectedMedicineId);
+        if (!medicine) {
+          currentView = 'home';
+          renderHome();
+          return;
+        }
+
+        const html = `
+          <div class="detail-section">
+            <a class="back-link" id="backToHome"><i class="fas fa-arrow-right"></i> العودة إلى قائمة الأدوية</a>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 1.5rem;">
+              <i class="fas ${medicine.icon}" style="font-size: 3rem; color: #0b3d5f;"></i>
+              <div>
+                <h2 style="font-size: 2rem; margin:0;">${medicine.name}</h2>
+                <span class="medicine-category" style="font-size:0.95rem;">${medicine.category}</span>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; background: #f9fcff; padding: 1.5rem; border-radius: 16px; margin: 1.2rem 0;">
+              <div><strong>المادة الفعالة:</strong> ${medicine.generic}</div>
+              <div><strong>الشركة:</strong> ${medicine.company}</div>
+              <div><strong>الجرعة المعتادة:</strong> ${medicine.dose}</div>
+              <div><strong>السعر التقريبي:</strong> <span style="color:#0b5e42; font-weight:bold;">${medicine.price}</span></div>
+            </div>
+            
+            <h3><i class="fas fa-info-circle"></i> وصف الدواء</h3>
+            <p style="font-size:1.1rem; margin:0.8rem 0 1.5rem;">${medicine.description}</p>
+            
+            <h3><i class="fas fa-clipboard-list"></i> دواعي الاستعمال</h3>
+            <p style="background: #eef6ff; padding: 1rem; border-radius: 12px;">${medicine.usage}</p>
+            
+            <div class="warning">
+              <i class="fas fa-exclamation-triangle"></i> <strong>تنبيه هام:</strong> هذه المعلومات استرشادية فقط. يجب استشارة الطبيب أو الصيدلي قبل الاستخدام. لا تتجاوز الجرعة المحددة.
+            </div>
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        document.getElementById('backToHome').addEventListener('click', (e) => {
+          e.preventDefault();
+          currentView = 'home';
+          renderHome();
+        });
+      }
+
+      // بدء التشغيل
+      renderHome();
+
+    })();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>دليل الأدوية في مصر | موسوعة الدواء المصرية</title>
+  <!-- Font Awesome للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fc;
+      color: #1e2b3c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* الهيدر */
+    header {
+      background: linear-gradient(135deg, #0b3d5f 0%, #1a5f8a 100%);
+      color: white;
+      padding: 1.8rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      border-bottom: 4px solid #f0b90b;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    header h1 i {
+      color: #f0b90b;
+      font-size: 2.2rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* شريط البحث والتصنيف */
+    .search-filter-bar {
+      background: white;
+      padding: 1.5rem 0;
+      margin: 1.8rem 0;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 40px;
+      padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+      flex: 2;
+      min-width: 260px;
+      border: 1px solid #e2e8f0;
+      transition: 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #1a5f8a;
+      box-shadow: 0 0 0 3px rgba(26,95,138,0.2);
+    }
+
+    .search-box i {
+      color: #5e7a98;
+      margin-left: 8px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 0.5rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      outline: none;
+      color: #0b2b44;
+    }
+
+    .search-box button {
+      background: #0b3d5f;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-box button:hover {
+      background: #1a5f8a;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: #e9eff5;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #1e3b5a;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn i {
+      font-size: 0.9rem;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    /* شبكة الأدوية */
+    .medicines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .medicine-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid #eef2f6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .medicine-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+      border-color: #cbd5e1;
+    }
+
+    .medicine-icon {
+      font-size: 2.7rem;
+      color: #1a5f8a;
+      margin-bottom: 0.8rem;
+    }
+
+    .medicine-category {
+      display: inline-block;
+      background: #e6f0f9;
+      color: #0b3d5f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+      align-self: flex-start;
+    }
+
+    .medicine-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #0a3147;
+    }
+
+    .generic-name {
+      color: #4b6589;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .dose-info {
+      background: #f8fafd;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin: 0.7rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2c3e50;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #0b5e42;
+      background: #e0f2e9;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+
+    .company {
+      font-size: 0.85rem;
+      color: #5f6c80;
+    }
+
+    .more-btn {
+      margin-top: auto;
+      text-decoration: none;
+      background: transparent;
+      border: 1.5px solid #0b3d5f;
+      color: #0b3d5f;
+      padding: 0.5rem;
+      border-radius: 30px;
+      text-align: center;
+      font-weight: 600;
+      transition: 0.2s;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .more-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      color: #5e6f82;
+      font-size: 1.2rem;
+    }
+
+    /* قسم تفصيلي (صفحة دواء) */
+    .detail-section {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #1a5f8a;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #5b6e85;
+      border-top: 1px solid #dfe6ef;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .warning {
+      background: #fff7e0;
+      border-right: 5px solid #f0b90b;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-capsules"></i> موسوعة الأدوية المصرية</h1>
+      <p class="subtitle">دليل شامل لأشهر أنواع الأدوية والمستحضرات الصيدلانية في مصر</p>
+    </header>
+
+    <!-- المحتوى الرئيسي سيتم حقنه عبر JavaScript -->
+    <main id="app-content"></main>
+
+    <footer class="footer">
+      <p><i class="far fa-copyright"></i> 2025 موسوعة الأدوية المصرية - جميع المعلومات للأغراض التعليمية فقط. استشر طبيبك دائمًا.</p>
+      <p style="font-size:0.85rem; margin-top:6px;">هذا الموقع لا يقدم استشارات طبية والأسعار تقريبية.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // قاعدة بيانات الأدوية (أمثلة توضيحية فقط - ليست حقيقية بالكامل)
+      const medicines = [
+        {
+          id: 1,
+          name: "بنادول إكسترا",
+          generic: "باراسيتامول + كافيين",
+          category: "مسكنات",
+          icon: "fa-pills",
+          dose: "١-٢ قرص كل ٦ ساعات",
+          price: "٣٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مسكن للآلام وخافض للحرارة يحتوي على باراسيتامول مع كافيين لتعزيز الفعالية.",
+          usage: "الصداع، آلام الأسنان، آلام الدورة الشهرية."
+        },
+        {
+          id: 2,
+          name: "بروفينال",
+          generic: "إيبوبروفين",
+          category: "مسكنات",
+          icon: "fa-capsules",
+          dose: "٤٠٠ مجم كل ٨ ساعات",
+          price: "٢٨ ج.م",
+          company: "فاركو للأدوية",
+          description: "مضاد التهاب غير ستيرويدي، مسكن قوي وخافض حرارة.",
+          usage: "الالتهابات، الروماتيزم، الإصابات."
+        },
+        {
+          id: 3,
+          name: "أوجمنتين",
+          generic: "أموكسيسيللين + حمض كلافولانيك",
+          category: "مضادات حيوية",
+          icon: "fa-shield-virus",
+          dose: "٦٢٥ مجم كل ١٢ ساعة",
+          price: "٨٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مضاد حيوي واسع المجال لمقاومة البكتيريا.",
+          usage: "التهابات الجهاز التنفسي، الأذن، الجيوب الأنفية."
+        },
+        {
+          id: 4,
+          name: "هيستازين",
+          generic: "سيتريزين",
+          category: "حساسية",
+          icon: "fa-allergies",
+          dose: "قرص واحد يوميًا",
+          price: "١٨ ج.م",
+          company: "إيبيكو",
+          description: "مضاد هستامين لعلاج أعراض الحساسية الموسمية.",
+          usage: "العطس، الحكة، الرشح التحسسي."
+        },
+        {
+          id: 5,
+          name: "كونجيستال",
+          generic: "باراسيتامول + سودوإيفيدرين",
+          category: "برد وإنفلونزا",
+          icon: "fa-head-side-cough",
+          dose: "قرصين ٣ مرات يوميًا",
+          price: "٢٢ ج.م",
+          company: "سيد للأدوية",
+          description: "لعلاج أعراض البرد والإنفلونزا واحتقان الأنف.",
+          usage: "الزكام، احتقان الجيوب الأنفية."
+        },
+        {
+          id: 6,
+          name: "فينتولين",
+          generic: "سالبوتامول",
+          category: "أمراض صدرية",
+          icon: "fa-lungs",
+          dose: "بخاخ حسب الحاجة",
+          price: "٦٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "موسع للشعب الهوائية لعلاج أزمات الربو.",
+          usage: "الربو، ضيق التنفس."
+        },
+        {
+          id: 7,
+          name: "داياميكرون إم آر",
+          generic: "جليكلازيد",
+          category: "سكري",
+          icon: "fa-syringe",
+          dose: "قرص يوميًا صباحًا",
+          price: "٥٥ ج.م",
+          company: "سيرفيه",
+          description: "علاج السكري من النوع الثاني لضبط مستوى السكر.",
+          usage: "مرض السكري."
+        },
+        {
+          id: 8,
+          name: "زانتاك",
+          generic: "رانيتيدين",
+          category: "جهاز هضمي",
+          icon: "fa-stomach",
+          dose: "قرص مرتين يوميًا",
+          price: "٣٠ ج.م",
+          company: "جلاكسو",
+          description: "مضاد للحموضة وعلاج قرحة المعدة.",
+          usage: "حرقة المعدة، ارتجاع المريء."
+        }
+      ];
+
+      const categories = ["الكل", "مسكنات", "مضادات حيوية", "حساسية", "برد وإنفلونزا", "أمراض صدرية", "سكري", "جهاز هضمي"];
+
+      // حالة التطبيق
+      let currentView = 'home'; // home or detail
+      let selectedMedicineId = null;
+      let activeCategory = "الكل";
+      let searchTerm = "";
+
+      // عنصر المحتوى الرئيسي
+      const appContent = document.getElementById('app-content');
+
+      // تصفية الأدوية حسب الفئة والبحث
+      function getFilteredMedicines() {
+        return medicines.filter(med => {
+          const matchCategory = activeCategory === "الكل" || med.category === activeCategory;
+          const term = searchTerm.trim().toLowerCase();
+          const matchSearch = term === "" || 
+                              med.name.toLowerCase().includes(term) || 
+                              med.generic.toLowerCase().includes(term) ||
+                              med.category.toLowerCase().includes(term);
+          return matchCategory && matchSearch;
+        });
+      }
+
+      // عرض الصفحة الرئيسية
+      function renderHome() {
+        const filtered = getFilteredMedicines();
+        
+        let categoryButtons = categories.map(cat => {
+          const activeClass = activeCategory === cat ? 'active' : '';
+          return `<button class="filter-btn ${activeClass}" data-category="${cat}"><i class="fas fa-tag"></i> ${cat}</button>`;
+        }).join('');
+
+        let cardsHtml = '';
+        if (filtered.length === 0) {
+          cardsHtml = `<div class="no-results"><i class="fas fa-search" style="font-size:2rem; opacity:0.6;"></i><p>لا توجد أدوية مطابقة لبحثك</p></div>`;
+        } else {
+          cardsHtml = filtered.map(med => {
+            return `
+              <div class="medicine-card" data-id="${med.id}">
+                <i class="fas ${med.icon} medicine-icon"></i>
+                <span class="medicine-category">${med.category}</span>
+                <h3>${med.name}</h3>
+                <div class="generic-name">${med.generic}</div>
+                <div class="dose-info"><i class="fas fa-clock"></i> ${med.dose}</div>
+                <span class="price"><i class="fas fa-tag"></i> ${med.price}</span>
+                <div class="company"><i class="far fa-building"></i> ${med.company}</div>
+                <button class="more-btn" data-id="${med.id}">تفاصيل الدواء <i class="fas fa-arrow-left"></i></button>
+              </div>
+            `;
+          }).join('');
+        }
+
+        const html = `
+          <div class="search-filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="searchInput" placeholder="ابحث عن دواء (اسم، مادة فعالة)..." value="${searchTerm}">
+              <button id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+            </div>
+            <div class="category-filters" id="categoryFilters">
+              ${categoryButtons}
+            </div>
+          </div>
+          <div class="medicines-grid" id="medicinesGrid">
+            ${cardsHtml}
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        // إضافة مستمعي الأحداث
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+          searchTerm = e.target.value;
+          renderHome();
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          const input = document.getElementById('searchInput');
+          searchTerm = input.value;
+          renderHome();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            activeCategory = e.currentTarget.getAttribute('data-category');
+            searchTerm = ""; // إعادة تعيين البحث عند تغيير الفئة لرؤية أوضح
+            renderHome();
+          });
+        });
+
+        document.querySelectorAll('.more-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+
+        // أيضًا النقر على البطاقة بالكامل (ما عدا الزر)
+        document.querySelectorAll('.medicine-card').forEach(card => {
+          card.addEventListener('click', function(e) {
+            if (e.target.closest('button')) return; // لا تفعل إذا كان الزر
+            const id = parseInt(this.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+      }
+
+      // عرض صفحة تفاصيل الدواء
+      function renderDetail() {
+        const medicine = medicines.find(m => m.id === selectedMedicineId);
+        if (!medicine) {
+          currentView = 'home';
+          renderHome();
+          return;
+        }
+
+        const html = `
+          <div class="detail-section">
+            <a class="back-link" id="backToHome"><i class="fas fa-arrow-right"></i> العودة إلى قائمة الأدوية</a>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 1.5rem;">
+              <i class="fas ${medicine.icon}" style="font-size: 3rem; color: #0b3d5f;"></i>
+              <div>
+                <h2 style="font-size: 2rem; margin:0;">${medicine.name}</h2>
+                <span class="medicine-category" style="font-size:0.95rem;">${medicine.category}</span>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; background: #f9fcff; padding: 1.5rem; border-radius: 16px; margin: 1.2rem 0;">
+              <div><strong>المادة الفعالة:</strong> ${medicine.generic}</div>
+              <div><strong>الشركة:</strong> ${medicine.company}</div>
+              <div><strong>الجرعة المعتادة:</strong> ${medicine.dose}</div>
+              <div><strong>السعر التقريبي:</strong> <span style="color:#0b5e42; font-weight:bold;">${medicine.price}</span></div>
+            </div>
+            
+            <h3><i class="fas fa-info-circle"></i> وصف الدواء</h3>
+            <p style="font-size:1.1rem; margin:0.8rem 0 1.5rem;">${medicine.description}</p>
+            
+            <h3><i class="fas fa-clipboard-list"></i> دواعي الاستعمال</h3>
+            <p style="background: #eef6ff; padding: 1rem; border-radius: 12px;">${medicine.usage}</p>
+            
+            <div class="warning">
+              <i class="fas fa-exclamation-triangle"></i> <strong>تنبيه هام:</strong> هذه المعلومات استرشادية فقط. يجب استشارة الطبيب أو الصيدلي قبل الاستخدام. لا تتجاوز الجرعة المحددة.
+            </div>
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        document.getElementById('backToHome').addEventListener('click', (e) => {
+          e.preventDefault();
+          currentView = 'home';
+          renderHome();
+        });
+      }
+
+      // بدء التشغيل
+      renderHome();
+
+    })();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>دليل الأدوية في مصر | موسوعة الدواء المصرية</title>
+  <!-- Font Awesome للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fc;
+      color: #1e2b3c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* الهيدر */
+    header {
+      background: linear-gradient(135deg, #0b3d5f 0%, #1a5f8a 100%);
+      color: white;
+      padding: 1.8rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      border-bottom: 4px solid #f0b90b;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    header h1 i {
+      color: #f0b90b;
+      font-size: 2.2rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* شريط البحث والتصنيف */
+    .search-filter-bar {
+      background: white;
+      padding: 1.5rem 0;
+      margin: 1.8rem 0;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 40px;
+      padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+      flex: 2;
+      min-width: 260px;
+      border: 1px solid #e2e8f0;
+      transition: 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #1a5f8a;
+      box-shadow: 0 0 0 3px rgba(26,95,138,0.2);
+    }
+
+    .search-box i {
+      color: #5e7a98;
+      margin-left: 8px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 0.5rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      outline: none;
+      color: #0b2b44;
+    }
+
+    .search-box button {
+      background: #0b3d5f;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-box button:hover {
+      background: #1a5f8a;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: #e9eff5;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #1e3b5a;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn i {
+      font-size: 0.9rem;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    /* شبكة الأدوية */
+    .medicines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .medicine-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid #eef2f6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .medicine-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+      border-color: #cbd5e1;
+    }
+
+    .medicine-icon {
+      font-size: 2.7rem;
+      color: #1a5f8a;
+      margin-bottom: 0.8rem;
+    }
+
+    .medicine-category {
+      display: inline-block;
+      background: #e6f0f9;
+      color: #0b3d5f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+      align-self: flex-start;
+    }
+
+    .medicine-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #0a3147;
+    }
+
+    .generic-name {
+      color: #4b6589;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .dose-info {
+      background: #f8fafd;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin: 0.7rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2c3e50;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #0b5e42;
+      background: #e0f2e9;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+
+    .company {
+      font-size: 0.85rem;
+      color: #5f6c80;
+    }
+
+    .more-btn {
+      margin-top: auto;
+      text-decoration: none;
+      background: transparent;
+      border: 1.5px solid #0b3d5f;
+      color: #0b3d5f;
+      padding: 0.5rem;
+      border-radius: 30px;
+      text-align: center;
+      font-weight: 600;
+      transition: 0.2s;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .more-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      color: #5e6f82;
+      font-size: 1.2rem;
+    }
+
+    /* قسم تفصيلي (صفحة دواء) */
+    .detail-section {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #1a5f8a;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #5b6e85;
+      border-top: 1px solid #dfe6ef;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .warning {
+      background: #fff7e0;
+      border-right: 5px solid #f0b90b;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-capsules"></i> موسوعة الأدوية المصرية</h1>
+      <p class="subtitle">دليل شامل لأشهر أنواع الأدوية والمستحضرات الصيدلانية في مصر</p>
+    </header>
+
+    <!-- المحتوى الرئيسي سيتم حقنه عبر JavaScript -->
+    <main id="app-content"></main>
+
+    <footer class="footer">
+      <p><i class="far fa-copyright"></i> 2025 موسوعة الأدوية المصرية - جميع المعلومات للأغراض التعليمية فقط. استشر طبيبك دائمًا.</p>
+      <p style="font-size:0.85rem; margin-top:6px;">هذا الموقع لا يقدم استشارات طبية والأسعار تقريبية.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // قاعدة بيانات الأدوية (أمثلة توضيحية فقط - ليست حقيقية بالكامل)
+      const medicines = [
+        {
+          id: 1,
+          name: "بنادول إكسترا",
+          generic: "باراسيتامول + كافيين",
+          category: "مسكنات",
+          icon: "fa-pills",
+          dose: "١-٢ قرص كل ٦ ساعات",
+          price: "٣٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مسكن للآلام وخافض للحرارة يحتوي على باراسيتامول مع كافيين لتعزيز الفعالية.",
+          usage: "الصداع، آلام الأسنان، آلام الدورة الشهرية."
+        },
+        {
+          id: 2,
+          name: "بروفينال",
+          generic: "إيبوبروفين",
+          category: "مسكنات",
+          icon: "fa-capsules",
+          dose: "٤٠٠ مجم كل ٨ ساعات",
+          price: "٢٨ ج.م",
+          company: "فاركو للأدوية",
+          description: "مضاد التهاب غير ستيرويدي، مسكن قوي وخافض حرارة.",
+          usage: "الالتهابات، الروماتيزم، الإصابات."
+        },
+        {
+          id: 3,
+          name: "أوجمنتين",
+          generic: "أموكسيسيللين + حمض كلافولانيك",
+          category: "مضادات حيوية",
+          icon: "fa-shield-virus",
+          dose: "٦٢٥ مجم كل ١٢ ساعة",
+          price: "٨٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مضاد حيوي واسع المجال لمقاومة البكتيريا.",
+          usage: "التهابات الجهاز التنفسي، الأذن، الجيوب الأنفية."
+        },
+        {
+          id: 4,
+          name: "هيستازين",
+          generic: "سيتريزين",
+          category: "حساسية",
+          icon: "fa-allergies",
+          dose: "قرص واحد يوميًا",
+          price: "١٨ ج.م",
+          company: "إيبيكو",
+          description: "مضاد هستامين لعلاج أعراض الحساسية الموسمية.",
+          usage: "العطس، الحكة، الرشح التحسسي."
+        },
+        {
+          id: 5,
+          name: "كونجيستال",
+          generic: "باراسيتامول + سودوإيفيدرين",
+          category: "برد وإنفلونزا",
+          icon: "fa-head-side-cough",
+          dose: "قرصين ٣ مرات يوميًا",
+          price: "٢٢ ج.م",
+          company: "سيد للأدوية",
+          description: "لعلاج أعراض البرد والإنفلونزا واحتقان الأنف.",
+          usage: "الزكام، احتقان الجيوب الأنفية."
+        },
+        {
+          id: 6,
+          name: "فينتولين",
+          generic: "سالبوتامول",
+          category: "أمراض صدرية",
+          icon: "fa-lungs",
+          dose: "بخاخ حسب الحاجة",
+          price: "٦٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "موسع للشعب الهوائية لعلاج أزمات الربو.",
+          usage: "الربو، ضيق التنفس."
+        },
+        {
+          id: 7,
+          name: "داياميكرون إم آر",
+          generic: "جليكلازيد",
+          category: "سكري",
+          icon: "fa-syringe",
+          dose: "قرص يوميًا صباحًا",
+          price: "٥٥ ج.م",
+          company: "سيرفيه",
+          description: "علاج السكري من النوع الثاني لضبط مستوى السكر.",
+          usage: "مرض السكري."
+        },
+        {
+          id: 8,
+          name: "زانتاك",
+          generic: "رانيتيدين",
+          category: "جهاز هضمي",
+          icon: "fa-stomach",
+          dose: "قرص مرتين يوميًا",
+          price: "٣٠ ج.م",
+          company: "جلاكسو",
+          description: "مضاد للحموضة وعلاج قرحة المعدة.",
+          usage: "حرقة المعدة، ارتجاع المريء."
+        }
+      ];
+
+      const categories = ["الكل", "مسكنات", "مضادات حيوية", "حساسية", "برد وإنفلونزا", "أمراض صدرية", "سكري", "جهاز هضمي"];
+
+      // حالة التطبيق
+      let currentView = 'home'; // home or detail
+      let selectedMedicineId = null;
+      let activeCategory = "الكل";
+      let searchTerm = "";
+
+      // عنصر المحتوى الرئيسي
+      const appContent = document.getElementById('app-content');
+
+      // تصفية الأدوية حسب الفئة والبحث
+      function getFilteredMedicines() {
+        return medicines.filter(med => {
+          const matchCategory = activeCategory === "الكل" || med.category === activeCategory;
+          const term = searchTerm.trim().toLowerCase();
+          const matchSearch = term === "" || 
+                              med.name.toLowerCase().includes(term) || 
+                              med.generic.toLowerCase().includes(term) ||
+                              med.category.toLowerCase().includes(term);
+          return matchCategory && matchSearch;
+        });
+      }
+
+      // عرض الصفحة الرئيسية
+      function renderHome() {
+        const filtered = getFilteredMedicines();
+        
+        let categoryButtons = categories.map(cat => {
+          const activeClass = activeCategory === cat ? 'active' : '';
+          return `<button class="filter-btn ${activeClass}" data-category="${cat}"><i class="fas fa-tag"></i> ${cat}</button>`;
+        }).join('');
+
+        let cardsHtml = '';
+        if (filtered.length === 0) {
+          cardsHtml = `<div class="no-results"><i class="fas fa-search" style="font-size:2rem; opacity:0.6;"></i><p>لا توجد أدوية مطابقة لبحثك</p></div>`;
+        } else {
+          cardsHtml = filtered.map(med => {
+            return `
+              <div class="medicine-card" data-id="${med.id}">
+                <i class="fas ${med.icon} medicine-icon"></i>
+                <span class="medicine-category">${med.category}</span>
+                <h3>${med.name}</h3>
+                <div class="generic-name">${med.generic}</div>
+                <div class="dose-info"><i class="fas fa-clock"></i> ${med.dose}</div>
+                <span class="price"><i class="fas fa-tag"></i> ${med.price}</span>
+                <div class="company"><i class="far fa-building"></i> ${med.company}</div>
+                <button class="more-btn" data-id="${med.id}">تفاصيل الدواء <i class="fas fa-arrow-left"></i></button>
+              </div>
+            `;
+          }).join('');
+        }
+
+        const html = `
+          <div class="search-filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="searchInput" placeholder="ابحث عن دواء (اسم، مادة فعالة)..." value="${searchTerm}">
+              <button id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+            </div>
+            <div class="category-filters" id="categoryFilters">
+              ${categoryButtons}
+            </div>
+          </div>
+          <div class="medicines-grid" id="medicinesGrid">
+            ${cardsHtml}
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        // إضافة مستمعي الأحداث
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+          searchTerm = e.target.value;
+          renderHome();
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          const input = document.getElementById('searchInput');
+          searchTerm = input.value;
+          renderHome();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            activeCategory = e.currentTarget.getAttribute('data-category');
+            searchTerm = ""; // إعادة تعيين البحث عند تغيير الفئة لرؤية أوضح
+            renderHome();
+          });
+        });
+
+        document.querySelectorAll('.more-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+
+        // أيضًا النقر على البطاقة بالكامل (ما عدا الزر)
+        document.querySelectorAll('.medicine-card').forEach(card => {
+          card.addEventListener('click', function(e) {
+            if (e.target.closest('button')) return; // لا تفعل إذا كان الزر
+            const id = parseInt(this.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+      }
+
+      // عرض صفحة تفاصيل الدواء
+      function renderDetail() {
+        const medicine = medicines.find(m => m.id === selectedMedicineId);
+        if (!medicine) {
+          currentView = 'home';
+          renderHome();
+          return;
+        }
+
+        const html = `
+          <div class="detail-section">
+            <a class="back-link" id="backToHome"><i class="fas fa-arrow-right"></i> العودة إلى قائمة الأدوية</a>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 1.5rem;">
+              <i class="fas ${medicine.icon}" style="font-size: 3rem; color: #0b3d5f;"></i>
+              <div>
+                <h2 style="font-size: 2rem; margin:0;">${medicine.name}</h2>
+                <span class="medicine-category" style="font-size:0.95rem;">${medicine.category}</span>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; background: #f9fcff; padding: 1.5rem; border-radius: 16px; margin: 1.2rem 0;">
+              <div><strong>المادة الفعالة:</strong> ${medicine.generic}</div>
+              <div><strong>الشركة:</strong> ${medicine.company}</div>
+              <div><strong>الجرعة المعتادة:</strong> ${medicine.dose}</div>
+              <div><strong>السعر التقريبي:</strong> <span style="color:#0b5e42; font-weight:bold;">${medicine.price}</span></div>
+            </div>
+            
+            <h3><i class="fas fa-info-circle"></i> وصف الدواء</h3>
+            <p style="font-size:1.1rem; margin:0.8rem 0 1.5rem;">${medicine.description}</p>
+            
+            <h3><i class="fas fa-clipboard-list"></i> دواعي الاستعمال</h3>
+            <p style="background: #eef6ff; padding: 1rem; border-radius: 12px;">${medicine.usage}</p>
+            
+            <div class="warning">
+              <i class="fas fa-exclamation-triangle"></i> <strong>تنبيه هام:</strong> هذه المعلومات استرشادية فقط. يجب استشارة الطبيب أو الصيدلي قبل الاستخدام. لا تتجاوز الجرعة المحددة.
+            </div>
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        document.getElementById('backToHome').addEventListener('click', (e) => {
+          e.preventDefault();
+          currentView = 'home';
+          renderHome();
+        });
+      }
+
+      // بدء التشغيل
+      renderHome();
+
+    })();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>دليل الأدوية في مصر | موسوعة الدواء المصرية</title>
+  <!-- Font Awesome للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fc;
+      color: #1e2b3c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* الهيدر */
+    header {
+      background: linear-gradient(135deg, #0b3d5f 0%, #1a5f8a 100%);
+      color: white;
+      padding: 1.8rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      border-bottom: 4px solid #f0b90b;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    header h1 i {
+      color: #f0b90b;
+      font-size: 2.2rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* شريط البحث والتصنيف */
+    .search-filter-bar {
+      background: white;
+      padding: 1.5rem 0;
+      margin: 1.8rem 0;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 40px;
+      padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+      flex: 2;
+      min-width: 260px;
+      border: 1px solid #e2e8f0;
+      transition: 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #1a5f8a;
+      box-shadow: 0 0 0 3px rgba(26,95,138,0.2);
+    }
+
+    .search-box i {
+      color: #5e7a98;
+      margin-left: 8px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 0.5rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      outline: none;
+      color: #0b2b44;
+    }
+
+    .search-box button {
+      background: #0b3d5f;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-box button:hover {
+      background: #1a5f8a;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: #e9eff5;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #1e3b5a;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn i {
+      font-size: 0.9rem;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    /* شبكة الأدوية */
+    .medicines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .medicine-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid #eef2f6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .medicine-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+      border-color: #cbd5e1;
+    }
+
+    .medicine-icon {
+      font-size: 2.7rem;
+      color: #1a5f8a;
+      margin-bottom: 0.8rem;
+    }
+
+    .medicine-category {
+      display: inline-block;
+      background: #e6f0f9;
+      color: #0b3d5f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+      align-self: flex-start;
+    }
+
+    .medicine-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #0a3147;
+    }
+
+    .generic-name {
+      color: #4b6589;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .dose-info {
+      background: #f8fafd;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin: 0.7rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2c3e50;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #0b5e42;
+      background: #e0f2e9;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+
+    .company {
+      font-size: 0.85rem;
+      color: #5f6c80;
+    }
+
+    .more-btn {
+      margin-top: auto;
+      text-decoration: none;
+      background: transparent;
+      border: 1.5px solid #0b3d5f;
+      color: #0b3d5f;
+      padding: 0.5rem;
+      border-radius: 30px;
+      text-align: center;
+      font-weight: 600;
+      transition: 0.2s;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .more-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      color: #5e6f82;
+      font-size: 1.2rem;
+    }
+
+    /* قسم تفصيلي (صفحة دواء) */
+    .detail-section {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #1a5f8a;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #5b6e85;
+      border-top: 1px solid #dfe6ef;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .warning {
+      background: #fff7e0;
+      border-right: 5px solid #f0b90b;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-capsules"></i> موسوعة الأدوية المصرية</h1>
+      <p class="subtitle">دليل شامل لأشهر أنواع الأدوية والمستحضرات الصيدلانية في مصر</p>
+    </header>
+
+    <!-- المحتوى الرئيسي سيتم حقنه عبر JavaScript -->
+    <main id="app-content"></main>
+
+    <footer class="footer">
+      <p><i class="far fa-copyright"></i> 2025 موسوعة الأدوية المصرية - جميع المعلومات للأغراض التعليمية فقط. استشر طبيبك دائمًا.</p>
+      <p style="font-size:0.85rem; margin-top:6px;">هذا الموقع لا يقدم استشارات طبية والأسعار تقريبية.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // قاعدة بيانات الأدوية (أمثلة توضيحية فقط - ليست حقيقية بالكامل)
+      const medicines = [
+        {
+          id: 1,
+          name: "بنادول إكسترا",
+          generic: "باراسيتامول + كافيين",
+          category: "مسكنات",
+          icon: "fa-pills",
+          dose: "١-٢ قرص كل ٦ ساعات",
+          price: "٣٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مسكن للآلام وخافض للحرارة يحتوي على باراسيتامول مع كافيين لتعزيز الفعالية.",
+          usage: "الصداع، آلام الأسنان، آلام الدورة الشهرية."
+        },
+        {
+          id: 2,
+          name: "بروفينال",
+          generic: "إيبوبروفين",
+          category: "مسكنات",
+          icon: "fa-capsules",
+          dose: "٤٠٠ مجم كل ٨ ساعات",
+          price: "٢٨ ج.م",
+          company: "فاركو للأدوية",
+          description: "مضاد التهاب غير ستيرويدي، مسكن قوي وخافض حرارة.",
+          usage: "الالتهابات، الروماتيزم، الإصابات."
+        },
+        {
+          id: 3,
+          name: "أوجمنتين",
+          generic: "أموكسيسيللين + حمض كلافولانيك",
+          category: "مضادات حيوية",
+          icon: "fa-shield-virus",
+          dose: "٦٢٥ مجم كل ١٢ ساعة",
+          price: "٨٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مضاد حيوي واسع المجال لمقاومة البكتيريا.",
+          usage: "التهابات الجهاز التنفسي، الأذن، الجيوب الأنفية."
+        },
+        {
+          id: 4,
+          name: "هيستازين",
+          generic: "سيتريزين",
+          category: "حساسية",
+          icon: "fa-allergies",
+          dose: "قرص واحد يوميًا",
+          price: "١٨ ج.م",
+          company: "إيبيكو",
+          description: "مضاد هستامين لعلاج أعراض الحساسية الموسمية.",
+          usage: "العطس، الحكة، الرشح التحسسي."
+        },
+        {
+          id: 5,
+          name: "كونجيستال",
+          generic: "باراسيتامول + سودوإيفيدرين",
+          category: "برد وإنفلونزا",
+          icon: "fa-head-side-cough",
+          dose: "قرصين ٣ مرات يوميًا",
+          price: "٢٢ ج.م",
+          company: "سيد للأدوية",
+          description: "لعلاج أعراض البرد والإنفلونزا واحتقان الأنف.",
+          usage: "الزكام، احتقان الجيوب الأنفية."
+        },
+        {
+          id: 6,
+          name: "فينتولين",
+          generic: "سالبوتامول",
+          category: "أمراض صدرية",
+          icon: "fa-lungs",
+          dose: "بخاخ حسب الحاجة",
+          price: "٦٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "موسع للشعب الهوائية لعلاج أزمات الربو.",
+          usage: "الربو، ضيق التنفس."
+        },
+        {
+          id: 7,
+          name: "داياميكرون إم آر",
+          generic: "جليكلازيد",
+          category: "سكري",
+          icon: "fa-syringe",
+          dose: "قرص يوميًا صباحًا",
+          price: "٥٥ ج.م",
+          company: "سيرفيه",
+          description: "علاج السكري من النوع الثاني لضبط مستوى السكر.",
+          usage: "مرض السكري."
+        },
+        {
+          id: 8,
+          name: "زانتاك",
+          generic: "رانيتيدين",
+          category: "جهاز هضمي",
+          icon: "fa-stomach",
+          dose: "قرص مرتين يوميًا",
+          price: "٣٠ ج.م",
+          company: "جلاكسو",
+          description: "مضاد للحموضة وعلاج قرحة المعدة.",
+          usage: "حرقة المعدة، ارتجاع المريء."
+        }
+      ];
+
+      const categories = ["الكل", "مسكنات", "مضادات حيوية", "حساسية", "برد وإنفلونزا", "أمراض صدرية", "سكري", "جهاز هضمي"];
+
+      // حالة التطبيق
+      let currentView = 'home'; // home or detail
+      let selectedMedicineId = null;
+      let activeCategory = "الكل";
+      let searchTerm = "";
+
+      // عنصر المحتوى الرئيسي
+      const appContent = document.getElementById('app-content');
+
+      // تصفية الأدوية حسب الفئة والبحث
+      function getFilteredMedicines() {
+        return medicines.filter(med => {
+          const matchCategory = activeCategory === "الكل" || med.category === activeCategory;
+          const term = searchTerm.trim().toLowerCase();
+          const matchSearch = term === "" || 
+                              med.name.toLowerCase().includes(term) || 
+                              med.generic.toLowerCase().includes(term) ||
+                              med.category.toLowerCase().includes(term);
+          return matchCategory && matchSearch;
+        });
+      }
+
+      // عرض الصفحة الرئيسية
+      function renderHome() {
+        const filtered = getFilteredMedicines();
+        
+        let categoryButtons = categories.map(cat => {
+          const activeClass = activeCategory === cat ? 'active' : '';
+          return `<button class="filter-btn ${activeClass}" data-category="${cat}"><i class="fas fa-tag"></i> ${cat}</button>`;
+        }).join('');
+
+        let cardsHtml = '';
+        if (filtered.length === 0) {
+          cardsHtml = `<div class="no-results"><i class="fas fa-search" style="font-size:2rem; opacity:0.6;"></i><p>لا توجد أدوية مطابقة لبحثك</p></div>`;
+        } else {
+          cardsHtml = filtered.map(med => {
+            return `
+              <div class="medicine-card" data-id="${med.id}">
+                <i class="fas ${med.icon} medicine-icon"></i>
+                <span class="medicine-category">${med.category}</span>
+                <h3>${med.name}</h3>
+                <div class="generic-name">${med.generic}</div>
+                <div class="dose-info"><i class="fas fa-clock"></i> ${med.dose}</div>
+                <span class="price"><i class="fas fa-tag"></i> ${med.price}</span>
+                <div class="company"><i class="far fa-building"></i> ${med.company}</div>
+                <button class="more-btn" data-id="${med.id}">تفاصيل الدواء <i class="fas fa-arrow-left"></i></button>
+              </div>
+            `;
+          }).join('');
+        }
+
+        const html = `
+          <div class="search-filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="searchInput" placeholder="ابحث عن دواء (اسم، مادة فعالة)..." value="${searchTerm}">
+              <button id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+            </div>
+            <div class="category-filters" id="categoryFilters">
+              ${categoryButtons}
+            </div>
+          </div>
+          <div class="medicines-grid" id="medicinesGrid">
+            ${cardsHtml}
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        // إضافة مستمعي الأحداث
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+          searchTerm = e.target.value;
+          renderHome();
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          const input = document.getElementById('searchInput');
+          searchTerm = input.value;
+          renderHome();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            activeCategory = e.currentTarget.getAttribute('data-category');
+            searchTerm = ""; // إعادة تعيين البحث عند تغيير الفئة لرؤية أوضح
+            renderHome();
+          });
+        });
+
+        document.querySelectorAll('.more-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+
+        // أيضًا النقر على البطاقة بالكامل (ما عدا الزر)
+        document.querySelectorAll('.medicine-card').forEach(card => {
+          card.addEventListener('click', function(e) {
+            if (e.target.closest('button')) return; // لا تفعل إذا كان الزر
+            const id = parseInt(this.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+      }
+
+      // عرض صفحة تفاصيل الدواء
+      function renderDetail() {
+        const medicine = medicines.find(m => m.id === selectedMedicineId);
+        if (!medicine) {
+          currentView = 'home';
+          renderHome();
+          return;
+        }
+
+        const html = `
+          <div class="detail-section">
+            <a class="back-link" id="backToHome"><i class="fas fa-arrow-right"></i> العودة إلى قائمة الأدوية</a>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 1.5rem;">
+              <i class="fas ${medicine.icon}" style="font-size: 3rem; color: #0b3d5f;"></i>
+              <div>
+                <h2 style="font-size: 2rem; margin:0;">${medicine.name}</h2>
+                <span class="medicine-category" style="font-size:0.95rem;">${medicine.category}</span>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; background: #f9fcff; padding: 1.5rem; border-radius: 16px; margin: 1.2rem 0;">
+              <div><strong>المادة الفعالة:</strong> ${medicine.generic}</div>
+              <div><strong>الشركة:</strong> ${medicine.company}</div>
+              <div><strong>الجرعة المعتادة:</strong> ${medicine.dose}</div>
+              <div><strong>السعر التقريبي:</strong> <span style="color:#0b5e42; font-weight:bold;">${medicine.price}</span></div>
+            </div>
+            
+            <h3><i class="fas fa-info-circle"></i> وصف الدواء</h3>
+            <p style="font-size:1.1rem; margin:0.8rem 0 1.5rem;">${medicine.description}</p>
+            
+            <h3><i class="fas fa-clipboard-list"></i> دواعي الاستعمال</h3>
+            <p style="background: #eef6ff; padding: 1rem; border-radius: 12px;">${medicine.usage}</p>
+            
+            <div class="warning">
+              <i class="fas fa-exclamation-triangle"></i> <strong>تنبيه هام:</strong> هذه المعلومات استرشادية فقط. يجب استشارة الطبيب أو الصيدلي قبل الاستخدام. لا تتجاوز الجرعة المحددة.
+            </div>
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        document.getElementById('backToHome').addEventListener('click', (e) => {
+          e.preventDefault();
+          currentView = 'home';
+          renderHome();
+        });
+      }
+
+      // بدء التشغيل
+      renderHome();
+
+    })();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>دليل الأدوية في مصر | موسوعة الدواء المصرية</title>
+  <!-- Font Awesome للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fc;
+      color: #1e2b3c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* الهيدر */
+    header {
+      background: linear-gradient(135deg, #0b3d5f 0%, #1a5f8a 100%);
+      color: white;
+      padding: 1.8rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      border-bottom: 4px solid #f0b90b;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    header h1 i {
+      color: #f0b90b;
+      font-size: 2.2rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* شريط البحث والتصنيف */
+    .search-filter-bar {
+      background: white;
+      padding: 1.5rem 0;
+      margin: 1.8rem 0;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 40px;
+      padding: 0.3rem 0.3rem 0.3rem 1.2rem;
+      flex: 2;
+      min-width: 260px;
+      border: 1px solid #e2e8f0;
+      transition: 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #1a5f8a;
+      box-shadow: 0 0 0 3px rgba(26,95,138,0.2);
+    }
+
+    .search-box i {
+      color: #5e7a98;
+      margin-left: 8px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.8rem 0.5rem;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      outline: none;
+      color: #0b2b44;
+    }
+
+    .search-box button {
+      background: #0b3d5f;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-box button:hover {
+      background: #1a5f8a;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: #e9eff5;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #1e3b5a;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn i {
+      font-size: 0.9rem;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    /* شبكة الأدوية */
+    .medicines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .medicine-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid #eef2f6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .medicine-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+      border-color: #cbd5e1;
+    }
+
+    .medicine-icon {
+      font-size: 2.7rem;
+      color: #1a5f8a;
+      margin-bottom: 0.8rem;
+    }
+
+    .medicine-category {
+      display: inline-block;
+      background: #e6f0f9;
+      color: #0b3d5f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+      align-self: flex-start;
+    }
+
+    .medicine-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #0a3147;
+    }
+
+    .generic-name {
+      color: #4b6589;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .dose-info {
+      background: #f8fafd;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin: 0.7rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #2c3e50;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #0b5e42;
+      background: #e0f2e9;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+
+    .company {
+      font-size: 0.85rem;
+      color: #5f6c80;
+    }
+
+    .more-btn {
+      margin-top: auto;
+      text-decoration: none;
+      background: transparent;
+      border: 1.5px solid #0b3d5f;
+      color: #0b3d5f;
+      padding: 0.5rem;
+      border-radius: 30px;
+      text-align: center;
+      font-weight: 600;
+      transition: 0.2s;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .more-btn:hover {
+      background: #0b3d5f;
+      color: white;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      color: #5e6f82;
+      font-size: 1.2rem;
+    }
+
+    /* قسم تفصيلي (صفحة دواء) */
+    .detail-section {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #1a5f8a;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #5b6e85;
+      border-top: 1px solid #dfe6ef;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .warning {
+      background: #fff7e0;
+      border-right: 5px solid #f0b90b;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-capsules"></i> موسوعة الأدوية المصرية</h1>
+      <p class="subtitle">دليل شامل لأشهر أنواع الأدوية والمستحضرات الصيدلانية في مصر</p>
+    </header>
+
+    <!-- المحتوى الرئيسي سيتم حقنه عبر JavaScript -->
+    <main id="app-content"></main>
+
+    <footer class="footer">
+      <p><i class="far fa-copyright"></i> 2025 موسوعة الأدوية المصرية - جميع المعلومات للأغراض التعليمية فقط. استشر طبيبك دائمًا.</p>
+      <p style="font-size:0.85rem; margin-top:6px;">هذا الموقع لا يقدم استشارات طبية والأسعار تقريبية.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // قاعدة بيانات الأدوية (أمثلة توضيحية فقط - ليست حقيقية بالكامل)
+      const medicines = [
+        {
+          id: 1,
+          name: "بنادول إكسترا",
+          generic: "باراسيتامول + كافيين",
+          category: "مسكنات",
+          icon: "fa-pills",
+          dose: "١-٢ قرص كل ٦ ساعات",
+          price: "٣٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مسكن للآلام وخافض للحرارة يحتوي على باراسيتامول مع كافيين لتعزيز الفعالية.",
+          usage: "الصداع، آلام الأسنان، آلام الدورة الشهرية."
+        },
+        {
+          id: 2,
+          name: "بروفينال",
+          generic: "إيبوبروفين",
+          category: "مسكنات",
+          icon: "fa-capsules",
+          dose: "٤٠٠ مجم كل ٨ ساعات",
+          price: "٢٨ ج.م",
+          company: "فاركو للأدوية",
+          description: "مضاد التهاب غير ستيرويدي، مسكن قوي وخافض حرارة.",
+          usage: "الالتهابات، الروماتيزم، الإصابات."
+        },
+        {
+          id: 3,
+          name: "أوجمنتين",
+          generic: "أموكسيسيللين + حمض كلافولانيك",
+          category: "مضادات حيوية",
+          icon: "fa-shield-virus",
+          dose: "٦٢٥ مجم كل ١٢ ساعة",
+          price: "٨٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "مضاد حيوي واسع المجال لمقاومة البكتيريا.",
+          usage: "التهابات الجهاز التنفسي، الأذن، الجيوب الأنفية."
+        },
+        {
+          id: 4,
+          name: "هيستازين",
+          generic: "سيتريزين",
+          category: "حساسية",
+          icon: "fa-allergies",
+          dose: "قرص واحد يوميًا",
+          price: "١٨ ج.م",
+          company: "إيبيكو",
+          description: "مضاد هستامين لعلاج أعراض الحساسية الموسمية.",
+          usage: "العطس، الحكة، الرشح التحسسي."
+        },
+        {
+          id: 5,
+          name: "كونجيستال",
+          generic: "باراسيتامول + سودوإيفيدرين",
+          category: "برد وإنفلونزا",
+          icon: "fa-head-side-cough",
+          dose: "قرصين ٣ مرات يوميًا",
+          price: "٢٢ ج.م",
+          company: "سيد للأدوية",
+          description: "لعلاج أعراض البرد والإنفلونزا واحتقان الأنف.",
+          usage: "الزكام، احتقان الجيوب الأنفية."
+        },
+        {
+          id: 6,
+          name: "فينتولين",
+          generic: "سالبوتامول",
+          category: "أمراض صدرية",
+          icon: "fa-lungs",
+          dose: "بخاخ حسب الحاجة",
+          price: "٦٥ ج.م",
+          company: "جلاكسو سميثكلاين",
+          description: "موسع للشعب الهوائية لعلاج أزمات الربو.",
+          usage: "الربو، ضيق التنفس."
+        },
+        {
+          id: 7,
+          name: "داياميكرون إم آر",
+          generic: "جليكلازيد",
+          category: "سكري",
+          icon: "fa-syringe",
+          dose: "قرص يوميًا صباحًا",
+          price: "٥٥ ج.م",
+          company: "سيرفيه",
+          description: "علاج السكري من النوع الثاني لضبط مستوى السكر.",
+          usage: "مرض السكري."
+        },
+        {
+          id: 8,
+          name: "زانتاك",
+          generic: "رانيتيدين",
+          category: "جهاز هضمي",
+          icon: "fa-stomach",
+          dose: "قرص مرتين يوميًا",
+          price: "٣٠ ج.م",
+          company: "جلاكسو",
+          description: "مضاد للحموضة وعلاج قرحة المعدة.",
+          usage: "حرقة المعدة، ارتجاع المريء."
+        }
+      ];
+
+      const categories = ["الكل", "مسكنات", "مضادات حيوية", "حساسية", "برد وإنفلونزا", "أمراض صدرية", "سكري", "جهاز هضمي"];
+
+      // حالة التطبيق
+      let currentView = 'home'; // home or detail
+      let selectedMedicineId = null;
+      let activeCategory = "الكل";
+      let searchTerm = "";
+
+      // عنصر المحتوى الرئيسي
+      const appContent = document.getElementById('app-content');
+
+      // تصفية الأدوية حسب الفئة والبحث
+      function getFilteredMedicines() {
+        return medicines.filter(med => {
+          const matchCategory = activeCategory === "الكل" || med.category === activeCategory;
+          const term = searchTerm.trim().toLowerCase();
+          const matchSearch = term === "" || 
+                              med.name.toLowerCase().includes(term) || 
+                              med.generic.toLowerCase().includes(term) ||
+                              med.category.toLowerCase().includes(term);
+          return matchCategory && matchSearch;
+        });
+      }
+
+      // عرض الصفحة الرئيسية
+      function renderHome() {
+        const filtered = getFilteredMedicines();
+        
+        let categoryButtons = categories.map(cat => {
+          const activeClass = activeCategory === cat ? 'active' : '';
+          return `<button class="filter-btn ${activeClass}" data-category="${cat}"><i class="fas fa-tag"></i> ${cat}</button>`;
+        }).join('');
+
+        let cardsHtml = '';
+        if (filtered.length === 0) {
+          cardsHtml = `<div class="no-results"><i class="fas fa-search" style="font-size:2rem; opacity:0.6;"></i><p>لا توجد أدوية مطابقة لبحثك</p></div>`;
+        } else {
+          cardsHtml = filtered.map(med => {
+            return `
+              <div class="medicine-card" data-id="${med.id}">
+                <i class="fas ${med.icon} medicine-icon"></i>
+                <span class="medicine-category">${med.category}</span>
+                <h3>${med.name}</h3>
+                <div class="generic-name">${med.generic}</div>
+                <div class="dose-info"><i class="fas fa-clock"></i> ${med.dose}</div>
+                <span class="price"><i class="fas fa-tag"></i> ${med.price}</span>
+                <div class="company"><i class="far fa-building"></i> ${med.company}</div>
+                <button class="more-btn" data-id="${med.id}">تفاصيل الدواء <i class="fas fa-arrow-left"></i></button>
+              </div>
+            `;
+          }).join('');
+        }
+
+        const html = `
+          <div class="search-filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="searchInput" placeholder="ابحث عن دواء (اسم، مادة فعالة)..." value="${searchTerm}">
+              <button id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+            </div>
+            <div class="category-filters" id="categoryFilters">
+              ${categoryButtons}
+            </div>
+          </div>
+          <div class="medicines-grid" id="medicinesGrid">
+            ${cardsHtml}
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        // إضافة مستمعي الأحداث
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+          searchTerm = e.target.value;
+          renderHome();
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+          const input = document.getElementById('searchInput');
+          searchTerm = input.value;
+          renderHome();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            activeCategory = e.currentTarget.getAttribute('data-category');
+            searchTerm = ""; // إعادة تعيين البحث عند تغيير الفئة لرؤية أوضح
+            renderHome();
+          });
+        });
+
+        document.querySelectorAll('.more-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+
+        // أيضًا النقر على البطاقة بالكامل (ما عدا الزر)
+        document.querySelectorAll('.medicine-card').forEach(card => {
+          card.addEventListener('click', function(e) {
+            if (e.target.closest('button')) return; // لا تفعل إذا كان الزر
+            const id = parseInt(this.getAttribute('data-id'), 10);
+            selectedMedicineId = id;
+            currentView = 'detail';
+            renderDetail();
+          });
+        });
+      }
+
+      // عرض صفحة تفاصيل الدواء
+      function renderDetail() {
+        const medicine = medicines.find(m => m.id === selectedMedicineId);
+        if (!medicine) {
+          currentView = 'home';
+          renderHome();
+          return;
+        }
+
+        const html = `
+          <div class="detail-section">
+            <a class="back-link" id="backToHome"><i class="fas fa-arrow-right"></i> العودة إلى قائمة الأدوية</a>
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 1.5rem;">
+              <i class="fas ${medicine.icon}" style="font-size: 3rem; color: #0b3d5f;"></i>
+              <div>
+                <h2 style="font-size: 2rem; margin:0;">${medicine.name}</h2>
+                <span class="medicine-category" style="font-size:0.95rem;">${medicine.category}</span>
+              </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; background: #f9fcff; padding: 1.5rem; border-radius: 16px; margin: 1.2rem 0;">
+              <div><strong>المادة الفعالة:</strong> ${medicine.generic}</div>
+              <div><strong>الشركة:</strong> ${medicine.company}</div>
+              <div><strong>الجرعة المعتادة:</strong> ${medicine.dose}</div>
+              <div><strong>السعر التقريبي:</strong> <span style="color:#0b5e42; font-weight:bold;">${medicine.price}</span></div>
+            </div>
+            
+            <h3><i class="fas fa-info-circle"></i> وصف الدواء</h3>
+            <p style="font-size:1.1rem; margin:0.8rem 0 1.5rem;">${medicine.description}</p>
+            
+            <h3><i class="fas fa-clipboard-list"></i> دواعي الاستعمال</h3>
+            <p style="background: #eef6ff; padding: 1rem; border-radius: 12px;">${medicine.usage}</p>
+            
+            <div class="warning">
+              <i class="fas fa-exclamation-triangle"></i> <strong>تنبيه هام:</strong> هذه المعلومات استرشادية فقط. يجب استشارة الطبيب أو الصيدلي قبل الاستخدام. لا تتجاوز الجرعة المحددة.
+            </div>
+          </div>
+        `;
+
+        appContent.innerHTML = html;
+
+        document.getElementById('backToHome').addEventListener('click', (e) => {
+          e.preventDefault();
+          currentView = 'home';
+          renderHome();
+        });
+      }
+
+      // بدء التشغيل
+      renderHome();
+
+    })();
+  </script>
+</body>
+</htm
