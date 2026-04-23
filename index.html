@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دار الشفاء 🏠</title>
+
+<style>
+body {background:black;color:white;text-align:center;font-family:Arial;}
+h1{color:red;}
+input{padding:10px;width:70%;border-radius:10px;border:none;}
+button{padding:10px;background:red;color:white;border:none;border-radius:10px;}
+.card{background:#1a1a1a;margin:20px;padding:15px;border-radius:15px;}
+</style>
+</head>
+
+<body>
+
+<h1>دار الشفاء 🏠</h1>
+
+<input id="search" placeholder="ابحث عن دواء...">
+<button onclick="searchDrug()">بحث</button>
+
+<div id="result"></div>
+
+<script>
+const drugs=[
+{name:"Panadol",use:"مسكن",price:"30 جنيه",dose:"3 مرات"},
+{name:"Brufen",use:"مضاد التهاب",price:"25 جنيه",dose:"مرتين"}
+];
+
+function searchDrug(){
+let input=document.getElementById("search").value.toLowerCase();
+let result=document.getElementById("result");
+let found=drugs.find(d=>d.name.toLowerCase()===input);
+
+if(found){
+result.innerHTML=`<div class="card">
+<h2>${found.name}</h2>
+<p>💊 ${found.use}</p>
+<p>💰 ${found.price}</p>
+<p>⏰ ${found.dose}</p>
+</div>`;
+}else{
+result.innerHTML="❌ مش موجود";
+}
+}
+</script>
+
+</body>
+</html>
